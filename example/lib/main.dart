@@ -1,4 +1,5 @@
 import 'package:fancy_on_boarding/fancy_on_boarding.dart';
+import 'package:fancy_on_boarding/fancy_on_boarding_last.dart';
 import 'package:flutter/material.dart';
 
 import 'second_screen.dart';
@@ -25,6 +26,7 @@ class MyHomePage extends StatefulWidget {
     Key? key,
     required this.title,
   }) : super(key: key);
+
 
   final String title;
 
@@ -142,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
       iconImagePath: 'assets/svg/cart.svg',
     ),
   ];
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

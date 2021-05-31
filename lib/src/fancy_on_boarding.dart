@@ -142,32 +142,35 @@ class _FancyOnBoardingState extends State<FancyOnBoarding>
                 ),
           ),
         ),
-        widget.showSkipButton
-            ? Positioned(
-                top: MediaQuery.of(context).padding.top,
-                right: isRTL ? null : 0,
-                left: isRTL ? 0 : null,
-                child: widget.skipButton ??
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: widget.skipButtonColor != null
-                            ? MaterialStateProperty.all<Color>(
-                                widget.doneButtonBackgroundColor!)
-                            : null,
+        if (opacity2 == 1.0)
+          widget.showSkipButton
+              ? Positioned(
+                  top: MediaQuery.of(context).padding.top,
+                  right: isRTL ? null : 0,
+                  left: isRTL ? 0 : null,
+                  child: widget.skipButton ??
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: widget.skipButtonColor != null
+                              ? MaterialStateProperty.all<Color>(
+                                  widget.doneButtonBackgroundColor!)
+                              : null,
+                        ),
+                        child: Text(
+                          widget.skipButtonText,
+                          style: widget.skipButtonTextStyle ??
+                              const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                        ),
+                        onPressed: opacity2 == 1.0
+                            ? widget.onSkipButtonPressed
+                            : () {},
                       ),
-                      child: Text(
-                        widget.skipButtonText,
-                        style: widget.skipButtonTextStyle ??
-                            const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w800,
-                            ),
-                      ),
-                      onPressed: widget.onSkipButtonPressed,
-                    ),
-              )
-            : Offstage()
+                )
+              : Offstage()
       ],
     );
   }
@@ -229,6 +232,15 @@ class _FancyOnBoardingState extends State<FancyOnBoarding>
         slideDirection == SlideDirection.leftToRight) return 1 - slidePercent;
     if (pageList.length - 1 == activeIndex) return 1.0;
     return 0.0;
+  }
+
+  double get opacity2 {
+    if (pageList.length - 2 == activeIndex &&
+        slideDirection == SlideDirection.rightToLeft) return slidePercent;
+    if (pageList.length - 1 == activeIndex &&
+        slideDirection == SlideDirection.leftToRight) return 1 - slidePercent;
+    if (pageList.length - 1 == activeIndex) return 0.0;
+    return 1.0;
   }
 
   @override
